@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks"
 import {
@@ -8,8 +8,10 @@ import {
   incrementAsync,
   incrementIfOdd,
   selectCount,
+  incrementSaga,
 } from "./counterSlice"
 import styles from "./Counter.module.css"
+import cityApi from "../../apis/cityApi"
 
 export function Counter() {
   const count = useAppSelector(selectCount)
@@ -17,6 +19,10 @@ export function Counter() {
   const [incrementAmount, setIncrementAmount] = useState("2")
 
   const incrementValue = Number(incrementAmount) || 0
+
+  useEffect(() => {
+    cityApi.getAll().then((res) => console.log(res.data))
+  }, [])
 
   return (
     <div>
@@ -50,12 +56,20 @@ export function Counter() {
         >
           Add Amount
         </button>
-        <button
+        {/* <button
           className={styles.asyncButton}
           onClick={() => dispatch(incrementAsync(incrementValue))}
         >
           Add Async
+        </button> */}
+
+        <button
+          className={styles.asyncButton}
+          onClick={() => dispatch(incrementSaga(incrementValue))}
+        >
+          Add Aync Saga
         </button>
+
         <button
           className={styles.button}
           onClick={() => dispatch(incrementIfOdd(incrementValue))}

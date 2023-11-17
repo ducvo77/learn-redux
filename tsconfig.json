@@ -14,8 +14,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "baseUrl": "/src",
     "types": ["testing-library__jest-dom"]
   },
-  "include": ["src"],
+  "include": ["src", "type.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
