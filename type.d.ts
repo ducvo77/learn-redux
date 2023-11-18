@@ -13,3 +13,8 @@ interface ListResponse<T> {
   data: T[]
   pagination: PaginationParams
 }
+
+interface User {
+  id: number | string
+  name: string
+}
