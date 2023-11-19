@@ -1,7 +1,15 @@
-// tsrpfc
+import { useRouteError } from "react-router-dom"
 
-export interface NotFoundProps {}
+export default function NotFound() {
+  const error: any = useRouteError()
 
-export function NotFound(props: NotFoundProps) {
-  return <div>Notfound Page</div>
+  return (
+    <div id="error-page">
+      <h1>Oops!</h1>
+      <p>Sorry, an unexpected error has occurred.</p>
+      <p>
+        <i>{error.statusText || error.message}</i>
+      </p>
+    </div>
+  )
 }
