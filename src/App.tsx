@@ -1,27 +1,31 @@
-import Button from "@mui/material/Button"
-import { useAppDispatch } from "./app/hooks"
-import { authActions } from "./features/auth/authSlice"
+import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom"
+import { useAppSelector } from "./app/hooks"
+import { NotFound } from "./components/Common"
+import MainLayout from "./components/Layout/Main"
+import { LoginPage } from "./features/auth/pages/LoginPage"
+import "./index.css"
 
 function App() {
-  const dispatch = useAppDispatch()
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
+  console.log(isLoggedIn)
 
-  const handleLogoutClick = () => {
-    dispatch(authActions.logout())
-  }
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <MainLayout />,
+      errorElement: <NotFound />,
+    },
+    {
+      path: "/login",
+      element: <LoginPage />,
+    },
+    {
+      path: "/admin",
+      element: isLoggedIn ? <MainLayout /> : <Navigate to="/login" />,
+    },
+  ])
 
-  return (
-    <div>
-      Hello world
-      <Button
-        onClick={handleLogoutClick}
-        variant="contained"
-        color="warning"
-        sx={{ fontSize: "0.75rem" }}
-      >
-        Fake logout
-      </Button>
-    </div>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App

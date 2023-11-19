@@ -3,12 +3,15 @@
 import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
-import { Paper } from "@mui/material"
-import { useAppDispatch } from "../../../app/hooks"
+import { CircularProgress, Paper } from "@mui/material"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { authActions } from "../authSlice"
+import { useNavigate } from "react-router-dom"
 
 export function LoginPage() {
   const dispatch = useAppDispatch()
+  const islogging = useAppSelector((state) => state.auth.logging)
+  const navigate = useNavigate()
 
   const handleLoginClick = () => {
     dispatch(
@@ -17,6 +20,7 @@ export function LoginPage() {
         password: "",
       }),
     )
+    navigate("/")
   }
 
   return (
@@ -38,7 +42,7 @@ export function LoginPage() {
           color="secondary"
           sx={{ fontSize: "0.75rem" }}
         >
-          Fake login
+          {islogging ? <CircularProgress /> : " Fake login"}
         </Button>
       </Paper>
     </Box>

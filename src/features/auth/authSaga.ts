@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit"
-import { call, fork, put, take } from "redux-saga/effects"
+import { call, delay, fork, put, take } from "redux-saga/effects"
 import { LoginPayload, authActions } from "./authSlice"
 
 function* handleLogin(payload: LoginPayload) {
@@ -11,9 +11,6 @@ function* handleLogin(payload: LoginPayload) {
         name: payload.username,
       }),
     )
-    console.log("login")
-
-    // Redirect to home page
   } catch (error: any) {
     yield put(authActions.loginFailed(error.message))
   }
@@ -21,15 +18,11 @@ function* handleLogin(payload: LoginPayload) {
 
 function* handleLogout() {
   localStorage.removeItem("access_token")
-  console.log("logout")
-
-  // Redirect to login page
 }
 
 function* wathLoginFlow() {
   while (true) {
     const isLoggedIn = !!localStorage.getItem("access_token")
-    console.log(isLoggedIn)
 
     if (!isLoggedIn) {
       // loggin
