@@ -1,18 +1,15 @@
-// tsrpfc
-
-import Typography from "@mui/material/Typography"
-import Button from "@mui/material/Button"
-import Box from "@mui/material/Box"
 import { CircularProgress, Paper } from "@mui/material"
-import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { authActions } from "../authSlice"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
 import { useNavigate } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { authActions, authLogging } from "../authSlice"
 
 export function LoginPage() {
   const dispatch = useAppDispatch()
-  const islogging = useAppSelector((state) => state.auth.logging)
   const navigate = useNavigate()
-
+  const auhtLogging = useAppSelector(authLogging)
   const handleLoginClick = () => {
     dispatch(
       authActions.login({
@@ -42,7 +39,7 @@ export function LoginPage() {
           color="secondary"
           sx={{ fontSize: "0.75rem" }}
         >
-          {islogging ? <CircularProgress /> : " Fake login"}
+          {auhtLogging ? <CircularProgress /> : " Fake login"}
         </Button>
       </Paper>
     </Box>

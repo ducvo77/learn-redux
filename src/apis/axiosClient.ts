@@ -1,8 +1,4 @@
-import axios, {
-  AxiosRequestConfig,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-} from "axios"
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios"
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_BASE_API_URL,

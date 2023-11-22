@@ -4,13 +4,14 @@ import {
   combineReducers,
   configureStore,
 } from "@reduxjs/toolkit"
+import { PERSIST, persistReducer, persistStore } from "redux-persist"
 
+import storage from "redux-persist/lib/storage"
 import createSagaMiddleware from "redux-saga"
 import authReducer from "../features/auth/authSlice"
 import counterReducer from "../features/counter/counterSlice"
+import dashboardReducer from "../features/dashboard/dashboardSlice"
 import rootSaga from "./rootSaga"
-import storage from "redux-persist/lib/storage"
-import { persistReducer, persistStore } from "redux-persist"
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -22,6 +23,7 @@ const persistConfig = {
 const reducers = combineReducers({
   counter: counterReducer,
   auth: authReducer,
+  dashboard: dashboardReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducers)
@@ -29,7 +31,11 @@ const persistedReducer = persistReducer(persistConfig, reducers)
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [PERSIST],
+      },
+    }).concat(sagaMiddleware),
 })
 
 sagaMiddleware.run(rootSaga)

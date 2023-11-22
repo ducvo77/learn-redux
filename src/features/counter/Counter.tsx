@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react"
 
-import { useAppSelector, useAppDispatch } from "../../app/hooks"
+import cityApi from "../../apis/cityApi"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import styles from "./Counter.module.css"
 import {
   decrement,
   increment,
   incrementByAmount,
-  incrementAsync,
   incrementIfOdd,
-  selectCount,
   incrementSaga,
+  selectCount,
 } from "./counterSlice"
-import styles from "./Counter.module.css"
-import cityApi from "../../apis/cityApi"
 
 export function Counter() {
   const count = useAppSelector(selectCount)

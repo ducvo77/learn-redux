@@ -8,11 +8,10 @@ import "./index.css"
 import NotFound from "./components/Common/NotFound"
 import StudentPage from "./features/student"
 import DashboardPage from "./features/dashboard"
+import { authIsLoggedIn } from "./features/auth/authSlice"
 
 function App() {
-  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
-  console.log(isLoggedIn)
-
+  const isLoggedIn = useAppSelector(authIsLoggedIn)
   const router = createBrowserRouter([
     {
       path: "/",
